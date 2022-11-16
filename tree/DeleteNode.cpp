@@ -17,3 +17,4 @@ public:
         delete(nxtNode);
     }
 };
+//constant space solution;
