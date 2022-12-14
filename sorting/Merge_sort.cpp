@@ -40,6 +40,8 @@ void merge(int *a,int s,int e){
   while(idx2<len2){
     a[aIdx++]=arr2[idx2++];
   }
+  delete []arr1;
+  delete []arr2;
 }
 
 void mergeSort(int *arr,int s,int e){
