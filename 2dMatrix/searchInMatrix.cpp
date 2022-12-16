@@ -1,4 +1,5 @@
-//matrix is sorted logn time complexity
+//matrix is sorted 
+//two pointer
 
 #include <iostream>
 using namespace std;
