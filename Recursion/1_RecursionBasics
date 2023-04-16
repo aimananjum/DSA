@@ -1,0 +1,160 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int factorial(int n){
+  int fact=1;
+  for(int i=1;i<=n;i++){
+    fact*=i;
+  }
+  return fact;
+}
+
+int nCr(int n,int r){
+  int numerator = factorial(n);
+  int demominator = factorial(r)*factorial(n-r);
+
+  int ans = numerator/demominator;
+  return ans;
+}
+
+int main() {
+  int n,r;
+  cin>>n;
+  cin>>r;
+
+  int ans = nCr(n,r);
+  cout<<ans;
+  
+  return 0;
+}
+
+
+
+
+
+//Linear search and binary search
+#include <iostream>
+using namespace std;
+
+bool linearSearch(int * arr,int n,int k){
+  if(n==0) return false;
+  if(arr[0]==k) return true;
+  else{return linearSearch(arr+1,n-1,k);}
+}
+int binarySearch(int *arr,int s,int e,int k){
+  if(s>e) return -1;
+  int mid=s+(e-s)/2;
+  if(arr[mid]==k) return mid;
+  else if(arr[mid]<k)
+    return binarySearch(arr,mid+1,e,k);
+  else
+    return binarySearch(arr,s,mid-1,k);   
+}
+int main() {
+  cout << "Hello World!\n";
+  int arr[]={1,2,3,4,5};
+  int ans = binarySearch(arr,0,5,18);
+  cout<<ans;
+  return 0;
+}
+
+//sorting rec
+
+#include <iostream>
+using namespace std;
+void printArray(int *a, int n) {
+  for (int i = 0; i < n; i++) {
+    cout << a[i] << " ";
+  }
+  cout << endl;
+}
+// void selectionSortRecursive(int * arr,int i,int n){
+//   if(i==n-1) return;//Base condition
+
+//   int minIdx=i;
+//   for(int j=i+1;j<n;j++){
+//     if(arr[j]<arr[minIdx]){//find minimum element index
+//       minIdx=j;
+//     }
+//   }
+//   swap(arr[i],arr[minIdx]);//swap with starting element
+//   return selectionSortRecursive(arr,i+1,n);//rec call
+// }
+void insertionSortRec(int *arr, int i, int n) {
+  if (i == n)
+    return;
+  int temp = arr[i];
+  int j = i;
+  for (; j >= 0; j--) {
+    if (arr[j - 1] > temp) {
+      arr[j] = arr[j - 1];
+    } else {
+      break;
+    }
+  }
+  arr[j] = temp;
+  return insertionSortRec(arr, i + 1, n);
+}
+int main() {
+
+  int arr[] = {20, 9, 17, 84, 1, 50};
+  printArray(arr, 6);
+  // selectionSortRecursive(arr,0,6);
+  insertionSortRec(arr, 1, 6);
+  printArray(arr, 6);
+}
+
+//merge sort
+#include <iostream>
+using namespace std;
+
+void merge(int *a,int s,int e){
+  int mid=s+(e-s)/2;
+  int len1=mid-s+1;
+  int len2=e-mid+1;
+
+  int *arr1 = new int[len1];
+  int *arr2 = new int[len2];
+
+  int aIdx=s;
+  for(int i=0;i<len1;i++){
+    arr1[i]=a[aIdx++];
+  }
+  aIdx=mid+1;
+  for(int i=0;i<len2;i++){
+    arr2[i]=a[aIdx++];
+  }
+  int idx1=0,idx2=0;
+  aIdx=s;
+  while(idx1<len1 && idx2<len2){
+    if(arr1[idx1]<arr2[idx2]){
+      a[aIdx++]=arr1[idx1++];
+    }
+    else{
+      a[aIdx++]=arr2[idx2++];
+    }
+  }
+  while(idx1<len1){
+    a[aIdx++]=arr1[idx1++];
+  }
+  while(idx2<len2){
+    a[aIdx++]=arr2[idx2++];
+  }
+}
+
+void mergeSort(int *arr,int s,int e){
+  if(s>=e) return;
+  int mid = s+(e-s)/2;
+
+  mergeSort(arr,s,mid);
+  mergeSort(arr,mid+1, e);
+  merge(arr,s,e);
+}
+int main() {
+  int arr[]={14,52,1,50,80,60,158,23,69};
+  mergeSort(arr,0,9);
+  for(auto a:arr){
+    cout<<a<<" ";
+  }
+  return 0;
+}
