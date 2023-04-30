@@ -21,6 +21,12 @@ Starting from 0, it is connected to 1 and 3, which will be printed. Then comes 2
 
 
 #include <bits/stdc++.h> 
+#include<iostream>
+#include<set>
+#include<unordered_map>
+#include<vector>
+
+using namespace std;
 void createAdjList(unordered_map<int,set<int>> &adj,vector<pair<int, int>> &edges){
     for(int i=0;i<edges.size();i++){
         int u=edges[i].first;
@@ -62,5 +68,14 @@ vector<int> BFS(int vertex, vector<pair<int, int>> edges)
         }
     }
     return ans;
+}
+int main(){
+    int n=4;
+    vector<pair<int, int>> edges={{0,1},{0,3},{1,2},{2,3}};
+    vector<int> ans = BFS(n,edges);
+    for(auto a:ans){
+        cout<<a<<" ";
+    }
+    return 0;
 }
 
