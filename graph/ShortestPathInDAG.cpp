@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include<iostream>
+
 using namespace std;
 
 class graph{
@@ -15,12 +16,36 @@ class graph{
     void printAdjList(){
         for(auto i:adj){
             cout<<i.first<<"->";
-            for(auto j:i.second){
+            for(auto j: i.second){
                 cout<<"("<<j.first<<","<<j.second<<"), ";
             }
             cout<<endl;
         }
     } 
+    void dfs(int node,unordered_map<int,bool> &vis,stack<int> &topo){
+        vis[node]=true;
+        while(auto i: adj[node]){
+            if(!vis[i.first]){
+                dfs(i.first,vis,topo);
+            }
+        }
+        topo.push(node);
+    }
+    void getShortestPath(int src,vector<int> &dist,stack<int> &topo){
+        dist[src]=0;
+        while(!topo.empty()){
+            int top = topo.top();
+            topo.pop();
+
+            if(dist[top]!=INT_MAX){
+                for(auto i:adj[top]){
+                    if(dist[top]+i.second < dist[i.first]){
+                        dist[i.first] = dist[top]+i.second; 
+                    }
+                }
+            }
+        }
+    }
 };
 int main(){
     graph g;
@@ -34,6 +59,25 @@ int main(){
     g.addEdge(3,4,-1);
     g.addEdge(4,5,-2);
     
-    g.printAdjList();
+    //g.printAdjList();
+    int n=6;
+    unordered_map<int,bool> visited;
+    stack<int> s;
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            g.dfs(i,visited,s);
+        }
+    }
+    int src=1;
+    vector<int> dist(n);
+    for(int i=0;i<n;i++){
+        dist[i]=INT_MAX;
+    }
+    g.getShortestPath(src,dist,s);
+    cout<<"Answer is :"<<endl;
+    for(auto a: dist){
+        cout<<a<<" ";
+    }
+    cout<<endl;
     return 0;
 }
