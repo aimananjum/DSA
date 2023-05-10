@@ -79,5 +79,6 @@ int main(){
         cout<<a<<" ";
     }
     cout<<endl;
+    cout<<endl;
     return 0;
 }
